@@ -47,7 +47,7 @@ Crafted from the Figma SVG source files located in `assets/`:
    - Interactive pointer physics: click, drag, and fling shapes with elastic spring return and particle sparkle bursts!
 
 3. **Live Countdown Clock**:
-   - Real-time countdown to Saturday, Nov 14, 2026, 9:00 AM PST (SFU Burnaby).
+   - Real-time countdown to Saturday, Nov 7, 2026, 9:00 AM PST (SFU Burnaby).
 
 4. **Interactive Schedule Timetable**:
    - Instant live search by title, topic, speaker, room, or track.

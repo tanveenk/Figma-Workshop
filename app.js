@@ -204,22 +204,23 @@
     resize();
     window.addEventListener('resize', resize);
 
-    // Initial shape configurations from Figma 6-final-mockup specs
-    // viewBox 700x1210: Hero card (389, 71, w=271, h=311)
-    // circle cx=490, cy=153, r=62, #F2712B  (relative: x=101, y=82)
-    // circle cx=582, cy=231, r=43, #F7B93E  (relative: x=193, y=160)
-    // capsule pill x=417, y=281, w=147, h=44, rx=22, #E8A9A3 (relative: x=28, y=210)
-    // circle cx=606, cy=315, r=20, #A8C5A0  (relative: x=217, y=244)
+    // Exact shape configurations from Figma specs & user screenshot:
+    // Box dimensions: 271 x 311
+    // Orange circle: cx=101, cy=82, r=62, #F2712B, with circular highlight at (cx-22, cy-18), r=14.5
+    // Gold circle: cx=193, cy=160, r=43, #F7B93E
+    // Coral capsule: x=28, y=210, w=147, h=44, rx=22, #E8A9A3
+    // Sage circle: cx=217, cy=244, r=20, #A8C5A0
     const shapes = [
       {
         id: 'orange-circle',
         type: 'circle',
-        x: 105,
-        y: 90,
-        baseX: 105,
-        baseY: 90,
-        r: 58,
+        x: 101,
+        y: 82,
+        baseX: 101,
+        baseY: 82,
+        r: 62,
         color: '#F2712B',
+        hasHighlight: true,
         vx: 0,
         vy: 0,
         isDragging: false,
@@ -228,12 +229,13 @@
       {
         id: 'gold-circle',
         type: 'circle',
-        x: 195,
-        y: 155,
-        baseX: 195,
-        baseY: 155,
-        r: 42,
+        x: 193,
+        y: 160,
+        baseX: 193,
+        baseY: 160,
+        r: 43,
         color: '#F7B93E',
+        hasHighlight: false,
         vx: 0,
         vy: 0,
         isDragging: false,
@@ -242,11 +244,11 @@
       {
         id: 'coral-capsule',
         type: 'capsule',
-        x: 35,
-        y: 200,
-        baseX: 35,
-        baseY: 200,
-        w: 135,
+        x: 28,
+        y: 210,
+        baseX: 28,
+        baseY: 210,
+        w: 147,
         h: 44,
         rx: 22,
         color: '#E8A9A3',
@@ -258,12 +260,13 @@
       {
         id: 'sage-circle',
         type: 'circle',
-        x: 215,
-        y: 235,
-        baseX: 215,
-        baseY: 235,
-        r: 22,
+        x: 217,
+        y: 244,
+        baseX: 217,
+        baseY: 244,
+        r: 20,
         color: '#A8C5A0',
+        hasHighlight: false,
         vx: 0,
         vy: 0,
         isDragging: false,
@@ -371,8 +374,8 @@
       shapes.forEach((s) => {
         if (!s.isDragging) {
           // Soft floating idle motion around base coordinate
-          const idleX = Math.sin(animTime + s.baseX * 0.05) * 4;
-          const idleY = Math.cos(animTime + s.baseY * 0.05) * 4;
+          const idleX = Math.sin(animTime + s.baseX * 0.04) * 2;
+          const idleY = Math.cos(animTime + s.baseY * 0.04) * 2;
 
           // Spring pull towards base
           const targetX = s.baseX + idleX;
@@ -392,20 +395,16 @@
           ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
           ctx.fill();
 
-          // Subtle glossy highlight
-          ctx.beginPath();
-          ctx.arc(s.x - s.r * 0.28, s.y - s.r * 0.28, s.r * 0.22, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
-          ctx.fill();
+          // Highlight bubble on the orange circle matching user screenshot
+          if (s.hasHighlight) {
+            ctx.beginPath();
+            ctx.arc(s.x - 22, s.y - 18, 14.5, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.33)';
+            ctx.fill();
+          }
         } else if (s.type === 'capsule') {
           ctx.beginPath();
           ctx.roundRect(s.x, s.y, s.w, s.h, s.rx);
-          ctx.fill();
-
-          // Subtle pill gloss line
-          ctx.beginPath();
-          ctx.roundRect(s.x + 8, s.y + 6, s.w - 16, 6, 3);
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
           ctx.fill();
         }
         ctx.restore();
@@ -439,10 +438,10 @@
 
   // ---------------------------------------------------------------------------
   // LIVE REAL-TIME COUNTDOWN
-  // Target: November 14, 2026, 09:00:00 PST (SFU Burnaby)
+  // Target: November 7, 2026, 09:00:00 PST (SFU Burnaby)
   // ---------------------------------------------------------------------------
   function initCountdown() {
-    const targetDate = new Date('2026-11-14T09:00:00-08:00').getTime();
+    const targetDate = new Date('2026-11-07T09:00:00-08:00').getTime();
 
     const daysEl = document.getElementById('countDays');
     const hoursEl = document.getElementById('countHours');
@@ -714,14 +713,14 @@
       'X-WR-CALNAME:Fall Hacks 2026 Schedule',
       'X-WR-TIMEZONE:America/Vancouver',
       ...scheduleData.map(item => {
-        const fakeStart = item.time.includes('9:00') ? '20261114T170000Z' :
-                          item.time.includes('10:00') ? '20261114T180000Z' :
-                          item.time.includes('10:45') ? '20261114T184500Z' :
-                          item.time.includes('11:30') ? '20261114T193000Z' :
-                          item.time.includes('12:30') ? '20261114T203000Z' :
-                          item.time.includes('2:00') ? '20261114T220000Z' :
-                          item.time.includes('5:00') ? '20261115T010000Z' : '20261115T020000Z';
-        const fakeEnd = item.time.includes('6:00') ? '20261115T030000Z' : '20261114T180000Z';
+        const fakeStart = item.time.includes('9:00') ? '20261107T170000Z' :
+                          item.time.includes('10:00') ? '20261107T180000Z' :
+                          item.time.includes('10:45') ? '20261107T184500Z' :
+                          item.time.includes('11:30') ? '20261107T193000Z' :
+                          item.time.includes('12:30') ? '20261107T203000Z' :
+                          item.time.includes('2:00') ? '20261107T220000Z' :
+                          item.time.includes('5:00') ? '20261108T010000Z' : '20261108T020000Z';
+        const fakeEnd = item.time.includes('6:00') ? '20261108T030000Z' : '20261107T180000Z';
         return [
           'BEGIN:VEVENT',
           `UID:${item.id}-fallhacks2026@sfu.ca`,
@@ -905,7 +904,7 @@
             </div>
             <div class="ticket-info-item">
               <div class="info-lbl">Date</div>
-              <div class="info-val">Nov 14, 2026</div>
+              <div class="info-val">Nov 7, 2026</div>
             </div>
             <div class="ticket-info-item">
               <div class="info-lbl">Doors Open</div>
@@ -971,7 +970,7 @@
 
     ctx.fillStyle = 'rgba(255, 248, 239, 0.7)';
     ctx.font = '20px sans-serif';
-    ctx.fillText('CSSS · SFU Burnaby · Nov 14, 2026', 320, 150);
+    ctx.fillText('CSSS · SFU Burnaby · Nov 7, 2026', 320, 150);
 
     // Divider line
     ctx.strokeStyle = 'rgba(255, 248, 239, 0.2)';
@@ -1013,7 +1012,7 @@
     ctx.fillText(hacker.school, 80, 465);
     ctx.fillText(hacker.ticketId, 360, 465);
     ctx.fillText('SFU Burnaby (ASB 9705)', 80, 565);
-    ctx.fillText('Nov 14, 2026', 360, 565);
+    ctx.fillText('Nov 7, 2026', 360, 565);
 
     // QR Area bottom
     ctx.fillStyle = '#FFF8EF';

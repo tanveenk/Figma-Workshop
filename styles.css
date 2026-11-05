@@ -511,18 +511,22 @@ body {
   width: 271px;
   height: 311px;
   background-color: var(--primary-dark);
-  border-radius: var(--radius-xl);
+  border-radius: 24px;
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow-hover);
-  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(42, 27, 46, 0.18);
   user-select: none;
+  cursor: grab;
   transition: transform var(--duration-normal) var(--ease-spring), box-shadow var(--duration-normal) var(--ease-spring);
 }
 
 .hero-graphic-card:hover {
-  transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 16px 36px rgba(42, 27, 46, 0.28);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(42, 27, 46, 0.24);
+}
+
+.hero-graphic-card:active {
+  cursor: grabbing;
 }
 
 .shape-layer {
@@ -551,27 +555,29 @@ body {
   right: 0;
   text-align: center;
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
+  font-weight: 700;
   color: var(--text-light);
-  letter-spacing: 0.04em;
-  font-weight: 500;
+  letter-spacing: 0.02em;
   z-index: 3;
   pointer-events: none;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .interactive-hint {
   position: absolute;
   top: 14px;
   right: 14px;
-  font-size: 0.7rem;
-  color: rgba(255, 248, 239, 0.7);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 248, 239, 0.88);
   background: rgba(255, 255, 255, 0.12);
-  padding: 3px 8px;
+  padding: 4px 12px;
   border-radius: var(--radius-full);
   z-index: 4;
   backdrop-filter: blur(4px);
   pointer-events: none;
+  letter-spacing: 0.02em;
 }
 
 /* ==========================================================================
