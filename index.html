@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fall Hacks 2026 · Build, Learn, Connect</title>
+  <meta name="description" content="Fall Hacks 2026 - SFU's premier student hackathon presented by CSSS. Nov 14, 2026 at SFU Burnaby.">
+  <meta name="theme-color" content="#FFF1E0">
+
+  <!-- OpenGraph Metadata -->
+  <meta property="og:title" content="Fall Hacks 2026">
+  <meta property="og:description" content="Build something, learn something new, meet your people. CSSS at SFU Burnaby.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon as SVG Data URI matching Figma dot -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%23F2712B'/></svg>">
+
+  <!-- Google Fonts: Bricolage Grotesque & DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Accessible Skip Link -->
+  <a href="#mainContent" class="skip-to-content">Skip to main content</a>
+
+  <!-- Canvas for celebration confetti explosions -->
+  <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;display:none;"></canvas>
+
+  <!-- Sticky Navigation Bar matching Figma design -->
+  <header class="site-header">
+    <div class="site-wrapper" style="padding-top:0; padding-bottom:0;">
+      <nav class="nav-bar" aria-label="Main Navigation">
+        <!-- Logo -->
+        <a href="#home" class="site-logo" aria-label="Fall Hacks Home">
+          <span class="logo-dot" aria-hidden="true"></span>
+          <span>Fall Hacks</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <div class="nav-center" role="menubar">
+          <a href="#home" class="nav-link active" data-view="home" role="menuitem">Home</a>
+          <a href="#schedule" class="nav-link" data-view="schedule" role="menuitem">Schedule</a>
+          <a href="#sponsors" class="nav-link" data-view="sponsors" role="menuitem">Sponsors</a>
+          <a href="#register" class="nav-link" data-view="register" role="menuitem">Register</a>
+        </div>
+
+        <!-- Navigation Actions (RSVP, Sound toggle, Mobile toggle) -->
+        <div class="nav-actions">
+          <button type="button" class="icon-btn" id="btnToggleSound" title="Toggle sound effects (M key)" aria-label="Toggle sound effects">
+            🔕
+          </button>
+          <a href="#register" class="btn-rsvp-top btn-rsvp-trigger" data-view="register">RSVP</a>
+          <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open mobile menu" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile Dropdown Menu (Strictly hidden on desktop, toggleable on mobile <= 720px) -->
+      <div class="mobile-menu-drawer" id="mobileMenuDrawer" aria-label="Mobile Navigation" hidden>
+        <a href="#home" class="mobile-nav-link" data-view="home">🏠 Home</a>
+        <a href="#schedule" class="mobile-nav-link" data-view="schedule">📅 Schedule</a>
+        <a href="#sponsors" class="mobile-nav-link" data-view="sponsors">🤝 Sponsors</a>
+        <a href="#register" class="mobile-nav-link" data-view="register">✍️ Register</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper with Multi-View SPA Panels -->
+  <main id="mainContent" class="site-wrapper">
+    <div class="views-container">
+
+      <!-- ================================================================= -->
+      <!-- VIEW 1: HOME (Based on 1-home.svg & 6-final-mockup.svg)          -->
+      <!-- ================================================================= -->
+      <section class="page-view active" data-view-id="home" aria-label="Home page">
+        <!-- Hero Section -->
+        <div class="hero-grid">
+          <div class="hero-content">
+            <span class="badge-pill dark">CSSS presents</span>
+            <h1 class="hero-title">
+              Fall Hacks
+              <span class="year-accent">2026</span>
+            </h1>
+            <p class="hero-description">Build something, learn something new, meet your people.</p>
+            <p class="hero-hosted">Hosted by CSSS</p>
+
+            <div class="hero-actions">
+              <a href="#register" class="btn-primary btn-rsvp-trigger">RSVP now</a>
+              <a href="#schedule" class="btn-secondary btn-schedule-trigger">See the schedule</a>
+            </div>
+
+            <div class="hero-meta-chips">
+              <span class="meta-chip" title="Saturday, Nov 14, 2026">
+                <span>📅</span> Nov 14, 2026
+              </span>
+              <button type="button" class="meta-chip" data-open-modal="campusModal" title="Click for campus directions & map">
+                <span>📍</span> SFU Burnaby
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Graphic Card (Interactive Vector Canvas Playground) -->
+          <div class="hero-graphic-card" id="heroGraphicBox" title="Click or drag geometric shapes!">
+            <canvas class="canvas-interactive" id="heroInteractiveCanvas"></canvas>
+            <span class="interactive-hint">✨ drag shapes</span>
+            <div class="graphic-label">hack. learn. connect.</div>
+          </div>
+        </div>
+
+        <!-- Live Hackathon Countdown Bar -->
+        <div class="countdown-strip" aria-label="Countdown to hackathon">
+          <div class="countdown-title">
+            <span>⏱️</span>
+            <span>Countdown to Hacking Begins:</span>
+          </div>
+          <div class="countdown-clock">
+            <div class="time-unit">
+              <span class="time-val" id="countDays">--</span>
+              <span class="time-label">Days</span>
+            </div>
+            <span class="time-sep">:</span>
+            <div class="time-unit">
+              <span class="time-val" id="countHours">--</span>
+              <span class="time-label">Hours</span>
+            </div>
+            <span class="time-sep">:</span>
+            <div class="time-unit">
+              <span class="time-val" id="countMins">--</span>
+              <span class="time-label">Mins</span>
+            </div>
+            <span class="time-sep">:</span>
+            <div class="time-unit">
+              <span class="time-val" id="countSecs">--</span>
+              <span class="time-label">Secs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- "What to expect" Section (3 Cards Trio) -->
+        <div class="section-block">
+          <div class="section-header-row">
+            <h2 class="section-heading">What to expect</h2>
+          </div>
+          <div class="cards-trio-grid">
+            <!-- Card 1: Build -->
+            <div class="expect-card card-peach" tabindex="0" role="button" aria-label="Build track details">
+              <div>
+                <span class="card-dot" style="background-color: var(--primary-orange);"></span>
+                <h3 class="card-title">Build</h3>
+              </div>
+              <p class="card-desc">Team up and ship a project from idea to demo in just 12 hours.</p>
+            </div>
+
+            <!-- Card 2: Learn -->
+            <div class="expect-card card-dark" tabindex="0" role="button" aria-label="Learn track details">
+              <div>
+                <span class="card-dot" style="background-color: var(--primary-gold);"></span>
+                <h3 class="card-title">Learn</h3>
+              </div>
+              <p class="card-desc">Workshops and industry mentors from leading tech companies to help you level up.</p>
+            </div>
+
+            <!-- Card 3: Connect -->
+            <div class="expect-card card-sage" tabindex="0" role="button" aria-label="Connect track details">
+              <div>
+                <span class="card-dot" style="background-color: var(--bg-coral);"></span>
+                <h3 class="card-title">Connect</h3>
+              </div>
+              <p class="card-desc">Meet other passionate students, sponsors, judges, and student society leaders.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- "The schedule" (Preview on Home) -->
+        <div class="section-block">
+          <div class="section-header-row">
+            <div>
+              <h2 class="section-heading">The schedule</h2>
+              <p class="section-subtext">Sample times. Swap in the real schedule.</p>
+            </div>
+            <a href="#schedule" class="view-all-link btn-schedule-trigger">View all 8 sessions &rarr;</a>
+          </div>
+          <div class="schedule-preview-grid">
+            <!-- Mini Sched 1 -->
+            <a href="#schedule" class="sched-mini-card btn-schedule-trigger">
+              <span class="sched-time-pill">9:00 AM</span>
+              <h3 class="sched-mini-title">Check-in</h3>
+              <p class="sched-mini-desc">Pick up your badge, grab breakfast and find your team.</p>
+            </a>
+
+            <!-- Mini Sched 2 -->
+            <a href="#schedule" class="sched-mini-card btn-schedule-trigger">
+              <span class="sched-time-pill">10:30 AM</span>
+              <h3 class="sched-mini-title">Kickoff</h3>
+              <p class="sched-mini-desc">Opening remarks, rules and the start of hacking.</p>
+            </a>
+
+            <!-- Mini Sched 3 -->
+            <a href="#schedule" class="sched-mini-card btn-schedule-trigger">
+              <span class="sched-time-pill">5:00 PM</span>
+              <h3 class="sched-mini-title">Demos</h3>
+              <p class="sched-mini-desc">Show what you built to judges and fellow hackers.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- "Thanks to our sponsors" Section -->
+        <div class="section-block">
+          <div class="section-header-row">
+            <h2 class="section-heading">Thanks to our sponsors</h2>
+            <a href="#sponsors" class="view-all-link">Explore perks &rarr;</a>
+          </div>
+          <div class="sponsors-ribbon-grid">
+            <button type="button" class="sponsor-mini-pill" data-sponsor-key="northwind">
+              <span class="sponsor-dot" style="background-color: #F2712B;"></span>
+              <span>Northwind</span>
+            </button>
+            <button type="button" class="sponsor-mini-pill" data-sponsor-key="acme">
+              <span class="sponsor-dot" style="background-color: #F7B93E;"></span>
+              <span>Acme Labs</span>
+            </button>
+            <button type="button" class="sponsor-mini-pill" data-sponsor-key="bluebird">
+              <span class="sponsor-dot" style="background-color: #E8A9A3;"></span>
+              <span>Bluebird</span>
+            </button>
+            <button type="button" class="sponsor-mini-pill" data-sponsor-key="greenleaf">
+              <span class="sponsor-dot" style="background-color: #A8C5A0;"></span>
+              <span>Greenleaf</span>
+            </button>
+            <button type="button" class="sponsor-mini-pill" data-sponsor-key="orbit">
+              <span class="sponsor-dot" style="background-color: #2A1B2E;"></span>
+              <span>Orbit</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Call to Action Banner -->
+        <div class="cta-banner">
+          <div class="cta-text-wrap">
+            <h2 class="cta-heading">Ready to hack?</h2>
+            <p class="cta-subtext">Save your spot for Fall Hacks 2026. Free for all students.</p>
+          </div>
+          <a href="#register" class="cta-btn btn-rsvp-trigger">RSVP now</a>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 2: SCHEDULE (Based on 2-event-schedule.svg)                 -->
+      <!-- ================================================================= -->
+      <section class="page-view" data-view-id="schedule" aria-label="Event schedule">
+        <div class="view-header">
+          <h1 class="view-title">The schedule</h1>
+          <p class="view-subtitle">Placeholder times. Swap in the real schedule.</p>
+        </div>
+
+        <!-- Schedule Interactive Toolbar -->
+        <div class="schedule-toolbar">
+          <div class="search-input-wrap">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="search" class="search-field" id="scheduleSearchInput" placeholder="Search events, topics, rooms..." aria-label="Search schedule">
+          </div>
+          <div class="toolbar-buttons">
+            <button type="button" class="btn-pill-small" id="btnFilterBookmarks" title="Show only bookmarked sessions">
+              ★ My Bookmarks
+            </button>
+            <button type="button" class="btn-pill-small" id="btnDownloadCalendar" title="Download .ics calendar file">
+              📥 Add to Calendar (.ics)
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Track Filter Pills -->
+        <div class="filter-pills-row" role="tablist" aria-label="Filter schedule by track">
+          <button type="button" class="filter-pill active" data-filter="all">All</button>
+          <button type="button" class="filter-pill" data-filter="main">Main Hall</button>
+          <button type="button" class="filter-pill" data-filter="workshop">Workshops</button>
+          <button type="button" class="filter-pill" data-filter="hack">Hacking & Teams</button>
+          <button type="button" class="filter-pill" data-filter="break">Meals & Breaks</button>
+          <button type="button" class="filter-pill" data-filter="judging">Judging & Demos</button>
+        </div>
+
+        <!-- Schedule Cards List (Loaded & managed interactively) -->
+        <div class="schedule-list" id="fullScheduleList" aria-live="polite">
+          <!-- Dynamically populated from scheduleData -->
+        </div>
+
+        <!-- Schedule View CTA Banner -->
+        <div class="cta-banner">
+          <div class="cta-text-wrap">
+            <h2 class="cta-heading">Ready to hack?</h2>
+            <p class="cta-subtext">Save your spot for Fall Hacks 2026.</p>
+          </div>
+          <a href="#register" class="cta-btn btn-rsvp-trigger">RSVP now</a>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 3: REGISTER (Based on 3-register-now.svg)                   -->
+      <!-- ================================================================= -->
+      <section class="page-view" data-view-id="register" aria-label="Registration form">
+        <div class="view-header">
+          <h1 class="view-title">Register now</h1>
+          <p class="view-subtitle">Free for students. Takes about two minutes.</p>
+        </div>
+
+        <div class="register-layout">
+          <!-- Form Card -->
+          <div class="register-form-card">
+            <!-- Modern Web Guidance: semantic <form> with post-interaction validation -->
+            <form id="registrationForm" novalidate>
+              <!-- Full Name -->
+              <div class="form-group">
+                <label for="fullName" class="form-label">
+                  Full name <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <input type="text" id="fullName" name="fullName" class="input-text"
+                       placeholder="Your name" required autocomplete="name"
+                       aria-describedby="fullNameError">
+                <div id="fullNameError" class="field-error-hint">Please enter your full name.</div>
+              </div>
+
+              <!-- Email -->
+              <div class="form-group">
+                <label for="email" class="form-label">
+                  Email <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <input type="email" id="email" name="email" class="input-text"
+                       placeholder="you@school.ca" required autocomplete="email"
+                       autocorrect="off" autocapitalize="off" spellcheck="false"
+                       aria-describedby="emailError">
+                <div id="emailError" class="field-error-hint">Please enter a valid student email address.</div>
+              </div>
+
+              <!-- School -->
+              <div class="form-group">
+                <label for="school" class="form-label">
+                  School <span class="required-mark" aria-hidden="true">*</span>
+                </label>
+                <input type="text" id="school" name="school" class="input-text"
+                       list="schoolsList" placeholder="Where do you study?" required
+                       autocomplete="organization" aria-describedby="schoolError">
+                <datalist id="schoolsList">
+                  <option value="Simon Fraser University (SFU)">
+                  <option value="University of British Columbia (UBC)">
+                  <option value="British Columbia Institute of Technology (BCIT)">
+                  <option value="University of Victoria (UVic)">
+                  <option value="Douglas College">
+                  <option value="Langara College">
+                  <option value="Kwantlen Polytechnic University (KPU)">
+                </datalist>
+                <div id="schoolError" class="field-error-hint">Please enter your school or institution.</div>
+              </div>
+
+              <!-- Year of study -->
+              <div class="form-group">
+                <label for="yearOfStudy" class="form-label">Year of study</label>
+                <select id="yearOfStudy" name="yearOfStudy" class="select-custom">
+                  <option value="" disabled selected>Select one</option>
+                  <option value="1st Year">1st Year Undergraduate</option>
+                  <option value="2nd Year">2nd Year Undergraduate</option>
+                  <option value="3rd Year">3rd Year Undergraduate</option>
+                  <option value="4th Year+">4th Year+ Undergraduate</option>
+                  <option value="Graduate">Graduate / Master's / PhD</option>
+                  <option value="Bootcamp/Highschool">Bootcamp / High School</option>
+                </select>
+              </div>
+
+              <!-- Experience level -->
+              <div class="form-group">
+                <label class="form-label" id="expLabel">Experience level</label>
+                <div class="radio-pills-group" role="radiogroup" aria-labelledby="expLabel">
+                  <label class="radio-pill-label">
+                    <input type="radio" name="experienceLevel" value="Beginner" class="radio-pill-input" checked>
+                    <span class="radio-pill-btn">Beginner</span>
+                  </label>
+                  <label class="radio-pill-label">
+                    <input type="radio" name="experienceLevel" value="Some experience" class="radio-pill-input">
+                    <span class="radio-pill-btn">Some experience</span>
+                  </label>
+                  <label class="radio-pill-label">
+                    <input type="radio" name="experienceLevel" value="Experienced" class="radio-pill-input">
+                    <span class="radio-pill-btn">Experienced</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Dietary needs -->
+              <div class="form-group">
+                <label for="dietaryNeeds" class="form-label">Dietary needs</label>
+                <div class="diet-chips-wrap">
+                  <button type="button" class="diet-chip">Vegetarian</button>
+                  <button type="button" class="diet-chip">Vegan</button>
+                  <button type="button" class="diet-chip">Halal</button>
+                  <button type="button" class="diet-chip">Gluten-Free</button>
+                  <button type="button" class="diet-chip">Dairy-Free</button>
+                </div>
+                <input type="text" id="dietaryNeeds" name="dietaryNeeds" class="input-text"
+                       placeholder="Optional (allergies or food restrictions)">
+              </div>
+
+              <!-- Code of conduct agreement -->
+              <div class="checkbox-row">
+                <input type="checkbox" id="codeOfConduct" name="codeOfConduct" class="checkbox-custom" required
+                       aria-describedby="cocError">
+                <label for="codeOfConduct" class="checkbox-label">
+                  I agree to the <a href="#coc" data-open-modal="cocModal">code of conduct</a>.
+                </label>
+              </div>
+              <div id="cocError" class="field-error-hint" style="margin-top:-14px; margin-bottom:14px;">
+                You must agree to the code of conduct to register.
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" class="btn-submit-register">Register now</button>
+
+              <p class="form-disclaimer">
+                You will get a confirmation email within a day.
+                <button type="button" id="btnViewSavedTicket" style="background:none;border:none;color:var(--primary-orange);text-decoration:underline;cursor:pointer;margin-left:6px;font-size:inherit;">
+                  Already registered? View ticket
+                </button>
+              </p>
+            </form>
+          </div>
+
+          <!-- Right Sidebar: What You Get & Event Details -->
+          <aside class="register-sidebar">
+            <!-- What you get -->
+            <div class="sidebar-card-dark">
+              <h2 class="sidebar-card-title">What you get</h2>
+              <ul class="perk-list">
+                <li class="perk-item">
+                  <span class="perk-dot" style="background-color: #F2712B;"></span>
+                  <span>Free food all day</span>
+                </li>
+                <li class="perk-item">
+                  <span class="perk-dot" style="background-color: #F7B93E;"></span>
+                  <span>Workshops and mentors</span>
+                </li>
+                <li class="perk-item">
+                  <span class="perk-dot" style="background-color: #E8A9A3;"></span>
+                  <span>Prizes and swag</span>
+                </li>
+                <li class="perk-item">
+                  <span class="perk-dot" style="background-color: #A8C5A0;"></span>
+                  <span>Time with sponsors</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Event details -->
+            <div class="sidebar-card-sage">
+              <h2 class="sidebar-card-title">Event details</h2>
+              <ul class="event-details-list">
+                <li><strong>Date:</strong> Nov 14, 2026</li>
+                <li><strong>Venue:</strong> SFU Burnaby</li>
+                <li><strong>Doors open:</strong> 9:00 AM</li>
+              </ul>
+              <button type="button" class="btn-pill-small" data-open-modal="campusModal" style="background:#FFF1E0; border:none; width:100%; justify-content:center;">
+                🗺️ View Campus Map & Info
+              </button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 4: SPONSORS (Based on 4-sponsors.svg)                       -->
+      <!-- ================================================================= -->
+      <section class="page-view" data-view-id="sponsors" aria-label="Sponsors and partners">
+        <div class="view-header">
+          <h1 class="view-title">Our sponsors</h1>
+          <p class="view-subtitle">Fall Hacks runs because of these teams. Thank you.</p>
+        </div>
+
+        <!-- Gold Tier -->
+        <div class="sponsor-tier-block">
+          <h2 class="tier-title">Gold</h2>
+          <div class="sponsors-grid-gold">
+            <div class="sponsor-card-gold" data-sponsor-key="northwind" tabindex="0" role="button" aria-label="Northwind sponsor details">
+              <div class="sponsor-card-head">
+                <div class="sponsor-logo-box">
+                  <span class="sponsor-dot" style="background-color: #F2712B; width:16px; height:16px;"></span>
+                  <span>Northwind</span>
+                </div>
+                <span class="badge-pill dark">Gold</span>
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-dark); margin: 8px 0; opacity:0.85;">Distributed systems & developer cloud infrastructure.</p>
+              <div class="sponsor-perk-tags">
+                <span class="perk-tag">💼 Hiring Interns</span>
+                <span class="perk-tag">🏆 $1,000 Track Prize</span>
+              </div>
+            </div>
+
+            <div class="sponsor-card-gold" data-sponsor-key="acme" tabindex="0" role="button" aria-label="Acme Labs sponsor details">
+              <div class="sponsor-card-head">
+                <div class="sponsor-logo-box">
+                  <span class="sponsor-dot" style="background-color: #F7B93E; width:16px; height:16px;"></span>
+                  <span>Acme Labs</span>
+                </div>
+                <span class="badge-pill dark">Gold</span>
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-dark); margin: 8px 0; opacity:0.85;">Applied AI & Creative Design tools for builders.</p>
+              <div class="sponsor-perk-tags">
+                <span class="perk-tag">🛠️ Workshop Hosts</span>
+                <span class="perk-tag">⚡ $100 API Credits</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Silver Tier -->
+        <div class="sponsor-tier-block">
+          <h2 class="tier-title">Silver</h2>
+          <div class="sponsors-grid-silver">
+            <div class="sponsor-card-silver" data-sponsor-key="bluebird" tabindex="0" role="button" aria-label="Bluebird sponsor details">
+              <div class="sponsor-logo-box">
+                <span class="sponsor-dot" style="background-color: #E8A9A3; width:14px; height:14px;"></span>
+                <span>Bluebird</span>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-dark); opacity:0.85;">Healthcare systems & patient tools.</p>
+              <span class="perk-tag" style="align-self:flex-start;">On-site Mentors</span>
+            </div>
+
+            <div class="sponsor-card-silver" data-sponsor-key="greenleaf" tabindex="0" role="button" aria-label="Greenleaf sponsor details">
+              <div class="sponsor-logo-box">
+                <span class="sponsor-dot" style="background-color: #A8C5A0; width:14px; height:14px;"></span>
+                <span>Greenleaf</span>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-dark); opacity:0.85;">Climate-tech & sustainable software.</p>
+              <span class="perk-tag" style="align-self:flex-start;">Green Hack Prize</span>
+            </div>
+
+            <div class="sponsor-card-silver" data-sponsor-key="orbit" tabindex="0" role="button" aria-label="Orbit sponsor details">
+              <div class="sponsor-logo-box">
+                <span class="sponsor-dot" style="background-color: #2A1B2E; width:14px; height:14px;"></span>
+                <span>Orbit</span>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-dark); opacity:0.85;">Edge databases & real-time telemetry.</p>
+              <span class="perk-tag" style="align-self:flex-start;">Hardware Kits</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Community Tier -->
+        <div class="sponsor-tier-block">
+          <h2 class="tier-title">Community Partners</h2>
+          <div class="sponsors-grid-community">
+            <div class="sponsor-card-community">SFU WiCS</div>
+            <div class="sponsor-card-community">SFU CSSS</div>
+            <div class="sponsor-card-community">GitHub Campus</div>
+            <div class="sponsor-card-community">Major League Hacking</div>
+            <div class="sponsor-card-community">Vancity Tech</div>
+          </div>
+        </div>
+
+        <!-- "Why sponsor" Section -->
+        <div class="section-block">
+          <div class="section-header-row">
+            <h2 class="section-heading">Why sponsor</h2>
+          </div>
+          <div class="cards-trio-grid">
+            <div class="expect-card card-peach" style="background-color: var(--bg-card); border: 1px solid var(--border-subtle);">
+              <div>
+                <span class="card-dot" style="background-color: #F2712B;"></span>
+                <h3 class="card-title">Meet talent</h3>
+              </div>
+              <p class="card-desc">Talk with passionate students who build innovative hardware and software projects for fun.</p>
+            </div>
+
+            <div class="expect-card card-peach" style="background-color: var(--bg-card); border: 1px solid var(--border-subtle);">
+              <div>
+                <span class="card-dot" style="background-color: #F7B93E;"></span>
+                <h3 class="card-title">Back students</h3>
+              </div>
+              <p class="card-desc">Help make a completely free, highly accessible event possible for first-time coders and designers.</p>
+            </div>
+
+            <div class="expect-card card-peach" style="background-color: var(--bg-card); border: 1px solid var(--border-subtle);">
+              <div>
+                <span class="card-dot" style="background-color: #E8A9A3;"></span>
+                <h3 class="card-title">Share your brand</h3>
+              </div>
+              <p class="card-desc">Get your tools, APIs, and engineering brand in front of hundreds of future technology leaders.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sponsor CTA Banner -->
+        <div class="cta-banner">
+          <div class="cta-text-wrap">
+            <h2 class="cta-heading">Want to sponsor?</h2>
+            <p class="cta-subtext">Reach student developers and designers across Metro Vancouver.</p>
+          </div>
+          <button type="button" class="cta-btn" data-open-modal="sponsorModal">Contact us</button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Persistent Global Footer -->
+    <footer class="site-footer">
+      <div>
+        <strong>CSSS · Fall Hacks 2026</strong>
+      </div>
+      <div class="footer-links">
+        <a href="#coc" class="footer-link" data-open-modal="cocModal">Code of Conduct</a>
+        <span>·</span>
+        <a href="#campus" class="footer-link" data-open-modal="campusModal">Campus Guide</a>
+        <span>·</span>
+        <a href="#sponsor" class="footer-link" data-open-modal="sponsorModal">Sponsorship Deck</a>
+      </div>
+      <div>
+        <span>Computing Science Student Society</span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL DIALOGS (Native <dialog> elements, Modern Web Guidance compliant)-->
+  <!-- ===================================================================== -->
+
+  <!-- 1. Digital Hacker Ticket & Badge Modal -->
+  <dialog id="badgeModal" closedby="any" aria-labelledby="badgeTitle">
+    <div class="dialog-header">
+      <h2 id="badgeTitle" class="dialog-title">Your Fall Hacks Pass</h2>
+      <button type="button" class="dialog-close-btn" aria-label="Close pass dialog">&times;</button>
+    </div>
+    <div class="badge-modal-content">
+      <div id="hackerTicketView">
+        <!-- Rendered by app.js -->
+      </div>
+      <div class="ticket-actions-bar">
+        <button type="button" class="btn-primary" id="btnDownloadBadge">
+          📥 Download Pass (PNG)
+        </button>
+        <button type="button" class="btn-secondary" onclick="document.getElementById('badgeModal').close()">
+          Done
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 2. Campus Guide & Travel Modal -->
+  <dialog id="campusModal" closedby="any" aria-labelledby="campusTitle">
+    <div class="dialog-header">
+      <h2 id="campusTitle" class="dialog-title">SFU Burnaby Campus Guide</h2>
+      <button type="button" class="dialog-close-btn" aria-label="Close campus guide">&times;</button>
+    </div>
+    <div style="font-size:0.9rem; line-height:1.55; color:var(--text-dark);">
+      <p style="margin-bottom:12px;">
+        <strong>Location:</strong> Applied Sciences Building (ASB 9705), Simon Fraser University, 8888 University Dr, Burnaby, BC.
+      </p>
+      <div style="background:var(--bg-cream); padding:12px 16px; border-radius:var(--radius-sm); margin-bottom:14px; border:1px solid var(--border-subtle);">
+        <h4 style="font-family:var(--font-heading); margin-bottom:4px; font-weight:700;">🚌 Public Transit</h4>
+        <p>Take the Expo or Millennium SkyTrain to <em>Production Way–University Station</em>, then transfer to the <strong>#145 SFU bus</strong> directly to the Burnaby Transportation Centre loop.</p>
+      </div>
+      <div style="background:var(--bg-cream); padding:12px 16px; border-radius:var(--radius-sm); margin-bottom:14px; border:1px solid var(--border-subtle);">
+        <h4 style="font-family:var(--font-heading); margin-bottom:4px; font-weight:700;">🚗 Parking & Entrance</h4>
+        <p>Visitor parking is available at West Mall Centre Parkade. Follow the CSSS orange directional signage straight to the Level 9 Atrium check-in tables.</p>
+      </div>
+      <div style="background:var(--bg-cream); padding:12px 16px; border-radius:var(--radius-sm); border:1px solid var(--border-subtle);">
+        <h4 style="font-family:var(--font-heading); margin-bottom:4px; font-weight:700;">📶 Wi-Fi & Facilities</h4>
+        <p>Connect to <strong>SFU-Guest</strong> (no password required) or <strong>eduroam</strong>. Accessible elevators and gender-neutral washrooms located in ASB Level 9.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 3. Sponsor Contact & Prospectus Modal -->
+  <dialog id="sponsorModal" closedby="any" aria-labelledby="sponsorModalTitle">
+    <div class="dialog-header">
+      <h2 id="sponsorModalTitle" class="dialog-title">Partner with Fall Hacks</h2>
+      <button type="button" class="dialog-close-btn" aria-label="Close sponsor dialog">&times;</button>
+    </div>
+    <form id="sponsorContactForm" style="display:flex; flex-direction:column; gap:14px;">
+      <p style="font-size:0.88rem; color:var(--text-dark);">
+        Connect directly with 300+ ambitious SFU and Metro Vancouver computer science and engineering students.
+      </p>
+      <div>
+        <label for="sponsorCompany" class="form-label">Company or Organization</label>
+        <input type="text" id="sponsorCompany" class="input-text" placeholder="e.g. Acme Tech" required>
+      </div>
+      <div>
+        <label for="sponsorRepEmail" class="form-label">Contact Work Email</label>
+        <input type="email" id="sponsorRepEmail" class="input-text" placeholder="partnerships@company.com" required>
+      </div>
+      <div>
+        <label for="sponsorTierSelect" class="form-label">Interested Tier</label>
+        <select id="sponsorTierSelect" class="select-custom">
+          <option value="Gold">Gold Partner ($3,000) - Keynote, Challenge, Booth & Resumes</option>
+          <option value="Silver">Silver Partner ($1,500) - Mentorship, Booth & Swag</option>
+          <option value="Community">Community Partner ($500) - Branding & Prize Sponsor</option>
+          <option value="Custom">Custom Partnership / In-Kind API Sponsor</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary" style="margin-top:6px;">Submit Inquiry</button>
+    </form>
+  </dialog>
+
+  <!-- 4. Sponsor Detail Modal (Clickable from any sponsor logo/card) -->
+  <dialog id="sponsorDetailModal" closedby="any" aria-labelledby="sponsorDetailTitle">
+    <div class="dialog-header">
+      <div>
+        <span id="sponsorDetailTier" class="badge-pill dark" style="font-size:0.75rem;">Sponsor</span>
+        <h2 id="sponsorDetailTitle" class="dialog-title" style="margin-top:4px;">Sponsor Name</h2>
+      </div>
+      <button type="button" class="dialog-close-btn" aria-label="Close details">&times;</button>
+    </div>
+    <div style="font-size:0.9rem; line-height:1.55; color:var(--text-dark); display:flex; flex-direction:column; gap:12px;">
+      <p id="sponsorDetailDesc">Company description</p>
+      <div style="background:var(--bg-cream); padding:12px 14px; border-radius:var(--radius-sm); border:1px solid var(--border-subtle);">
+        <strong style="color:var(--primary-orange);">🎁 Hacker Perks & Opportunities:</strong>
+        <p id="sponsorDetailPerks" style="margin-top:4px;">Perk details</p>
+      </div>
+      <div>
+        <strong>Tech Stack:</strong>
+        <p id="sponsorDetailTech" style="font-family:var(--font-mono); font-size:0.82rem; margin-top:2px;">Stack</p>
+      </div>
+      <button type="button" class="btn-primary" onclick="document.getElementById('sponsorDetailModal').close()" style="align-self:flex-start; margin-top:8px;">
+        Close
+      </button>
+    </div>
+  </dialog>
+
+  <!-- 5. Code of Conduct Modal -->
+  <dialog id="cocModal" closedby="any" aria-labelledby="cocTitle">
+    <div class="dialog-header">
+      <h2 id="cocTitle" class="dialog-title">Code of Conduct</h2>
+      <button type="button" class="dialog-close-btn" aria-label="Close code of conduct">&times;</button>
+    </div>
+    <div style="font-size:0.88rem; line-height:1.55; color:var(--text-dark); max-height:360px; overflow-y:auto; padding-right:8px;">
+      <p style="margin-bottom:10px;">
+        Fall Hacks is dedicated to providing a safe, inclusive, harassment-free experience for everyone, regardless of gender, gender identity, sexual orientation, disability, physical appearance, body size, race, or religion.
+      </p>
+      <h4 style="font-family:var(--font-heading); margin-top:10px; margin-bottom:4px; font-weight:700;">Our Standards:</h4>
+      <ul style="padding-left:20px; margin-bottom:10px;">
+        <li>Use welcoming and inclusive language.</li>
+        <li>Be respectful of differing viewpoints and experiences.</li>
+        <li>Gracefully accept constructive criticism.</li>
+        <li>Focus on what is best for the hacker community.</li>
+        <li>Show empathy towards other community members.</li>
+      </ul>
+      <p>
+        If you experience or witness unacceptable behavior, please alert any organizer with a CSSS badge or email <strong>conduct@fallhacks.ca</strong>.
+      </p>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification Shelf -->
+  <div class="toast-shelf" id="toastShelf" aria-live="polite"></div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script src="app.js"></script>
+</body>
+</html>

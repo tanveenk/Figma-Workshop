@@ -1,0 +1,8 @@
+{
+  "name": "figma-workshop-fall-hacks",
+  "version": "1.0.0",
+  "description": "Fall Hacks 2026 Interactive Website",
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
